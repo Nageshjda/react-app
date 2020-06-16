@@ -15,8 +15,6 @@ jobs:
           node-version: '12.x'
       - name: npm installation
         run: npm ci 
-      - name: npm format check 
-        run: npm run format:check
       - name: code coverage 
         run: npm test -- --coverage
         env:
