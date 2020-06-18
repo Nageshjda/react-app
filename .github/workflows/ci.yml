@@ -11,16 +11,27 @@ jobs:
     steps:
       - name: checkout action
         uses: actions/checkout@v2
+
+      - name: cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm 
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')}}
+          restore-key: ${{ runner.os }}-node-
+
       - name: use nodejs
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+
       - name: npm installation
-        run: npm ci 
+        run: npm ci
+
       - name: code coverage 
         run: npm test -- --coverage
         env:
           CI: true
+
       - name: build project
         if: github.event_name == 'push'
         run: npm run build 
