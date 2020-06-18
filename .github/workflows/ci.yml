@@ -1,0 +1,26 @@
+name: CI
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout action
+        uses: actions/checkout@v2
+      - name: use nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: npm installation
+        run: npm ci 
+      - name: code coverage 
+        run: npm test -- --coverage
+        env:
+          CI: true
+      - name: build project
+        if: github.event_name == 'push'
+        run: npm run build 
