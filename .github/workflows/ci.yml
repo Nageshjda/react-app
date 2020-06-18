@@ -22,5 +22,5 @@ jobs:
         env:
           CI: true
       - name: build project
-        if: gitub.event_name == 'push'
+        if: github.event_name == 'push'
         run: npm run build 
